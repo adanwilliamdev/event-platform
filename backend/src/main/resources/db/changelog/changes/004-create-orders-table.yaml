@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-create-orders-table
+      author: event-platform
+      changes:
+        - createTable:
+            tableName: orders
+            columns:
+              - column:
+                  name: id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_orders_user
+                    references: users(id)
+              - column:
+                  name: total_amount
+                  type: decimal(10,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: stripe_payment_id
+                  type: varchar(255)
+              - column:
+                  name: stripe_payment_intent
+                  type: varchar(255)
+              - column:
+                  name: created_at
+                  type: timestamp
+              - column:
+                  name: updated_at
+                  type: timestamp
+        - createIndex:
+            indexName: idx_orders_user
+            tableName: orders
+            columns:
+              - column:
+                  name: user_id
+        - createIndex:
+            indexName: idx_orders_stripe_payment_intent
+            tableName: orders
+            columns:
+              - column:
+                  name: stripe_payment_intent

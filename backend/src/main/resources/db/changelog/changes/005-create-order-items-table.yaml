@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: 005-create-order-items-table
+      author: event-platform
+      changes:
+        - createTable:
+            tableName: order_items
+            columns:
+              - column:
+                  name: id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: order_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_order_items_order
+                    references: orders(id)
+              - column:
+                  name: ticket_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+                    unique: true
+                    foreignKeyName: fk_order_items_ticket
+                    references: tickets(id)
+              - column:
+                  name: price
+                  type: decimal(10,2)
+                  constraints:
+                    nullable: false
+        - createIndex:
+            indexName: idx_order_items_order
+            tableName: order_items
+            columns:
+              - column:
+                  name: order_id

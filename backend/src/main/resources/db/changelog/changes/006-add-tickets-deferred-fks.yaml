@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 006-add-tickets-deferred-fks
+      author: event-platform
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: tickets
+            baseColumnNames: order_id
+            constraintName: fk_tickets_order
+            referencedTableName: orders
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: tickets
+            baseColumnNames: reserved_by
+            constraintName: fk_tickets_reserved_by
+            referencedTableName: users
+            referencedColumnNames: id
