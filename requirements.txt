@@ -1,0 +1,14 @@
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+sqlalchemy==2.0.36
+pydantic[email]==2.10.3
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.20
+qrcode[pil]==8.0
+jinja2==3.1.4
+aiosqlite==0.20.0
+
+# Opcional: só é necessário se você configurar STRIPE_SECRET_KEY para usar
+# pagamentos reais em vez do modo de demonstração.
+# stripe==11.3.0
