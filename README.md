@@ -1,8 +1,8 @@
 # 🎟️ Palco — Plataforma de Eventos
 
-> Plataforma completa para **criação, gerenciamento e venda de ingressos para eventos**, desenvolvida com FastAPI e uma interface web moderna, responsiva e fluida.
+> Plataforma completa para **criação, gerenciamento e venda de ingressos para eventos**, desenvolvida com **FastAPI** e uma interface web moderna, responsiva e fluida.
 
-O **Palco** permite que organizadores criem e gerenciem eventos, disponibilizem ingressos e acompanhem sua disponibilidade em tempo real. Usuários podem explorar eventos, reservar ingressos, realizar pedidos e acessar seus ingressos digitais com QR Code.
+O **Palco** permite que organizadores criem e gerenciem eventos, disponibilizem ingressos e acompanhem sua disponibilidade em tempo real. Usuários podem explorar eventos, reservar ingressos, realizar pedidos e acessar seus ingressos digitais com **QR Code**.
 
 A aplicação foi projetada com foco em **simplicidade, segurança, concorrência e experiência do usuário**, utilizando uma arquitetura enxuta e sem dependências de infraestrutura externa para execução local.
 
@@ -22,8 +22,8 @@ A aplicação foi projetada com foco em **simplicidade, segurança, concorrênci
 
 * Criação e gerenciamento de eventos
 * Listagem de eventos disponíveis
-* Eventos futuros
-* Visualização detalhada de eventos
+* Visualização de eventos futuros
+* Visualização detalhada dos eventos
 * Controle de disponibilidade dos ingressos
 * Reserva temporária de ingressos
 * Liberação automática de reservas expiradas
@@ -52,9 +52,9 @@ A aplicação foi projetada com foco em **simplicidade, segurança, concorrênci
 
 ### ⚡ Atualização em tempo real
 
-A disponibilidade dos ingressos é atualizada em tempo real através de WebSockets.
+A disponibilidade dos ingressos é atualizada em tempo real através de **WebSockets**.
 
-Quando um ingresso é reservado, liberado ou vendido, os clientes conectados ao evento recebem a atualização automaticamente.
+Quando um ingresso é reservado, liberado ou vendido, os clientes conectados ao evento recebem automaticamente a atualização.
 
 ```text
 Cliente A reserva ingresso
@@ -92,8 +92,8 @@ A aplicação utiliza uma arquitetura organizada por responsabilidades, separand
 
 ```text
 ┌─────────────────────────────────────────────┐
-│                 Frontend                    │
-│          HTML + CSS + JavaScript             │
+│                  Frontend                   │
+│           HTML + CSS + JavaScript           │
 └──────────────────────┬──────────────────────┘
                        │
                        │ HTTP / WebSocket
@@ -106,8 +106,8 @@ A aplicação utiliza uma arquitetura organizada por responsabilidades, separand
 │  └────────────┘  └────────────┘             │
 │                                             │
 │  ┌──────────────────────────────────────┐   │
-│  │             Services                 │   │
-│  │ Auth • Events • Tickets • Orders      │   │
+│  │              Services                │   │
+│  │ Auth • Events • Tickets • Orders     │   │
 │  └──────────────────────────────────────┘   │
 │                                             │
 │  ┌────────────┐  ┌────────────┐             │
@@ -122,8 +122,8 @@ A aplicação utiliza uma arquitetura organizada por responsabilidades, separand
                       │
                       ▼
               ┌────────────────┐
-              │ SQLite /        │
-              │ PostgreSQL      │
+              │ SQLite /       │
+              │ PostgreSQL     │
               └────────────────┘
 ```
 
@@ -165,7 +165,7 @@ A aplicação utiliza uma arquitetura organizada por responsabilidades, separand
 ### Outros
 
 * QR Code
-* Background tasks
+* Background Tasks
 * Controle de concorrência para reservas
 * API REST
 * WebSocket
@@ -192,7 +192,7 @@ Um dos principais pontos da plataforma é o controle de concorrência durante a 
    Pagamento   Expiração
    confirmado    10 min
        ↓         ↓
-   SOLD       AVAILABLE
+      SOLD    AVAILABLE
 ```
 
 As reservas possuem validade de **10 minutos**.
@@ -203,7 +203,7 @@ Caso o pedido não seja confirmado dentro desse período, o ingresso é liberado
 
 ## 💳 Pagamentos
 
-O Stripe pode ser configurado para processar pagamentos reais.
+O **Stripe** pode ser configurado para processar pagamentos reais.
 
 Sem uma chave do Stripe configurada, o sistema utiliza um **modo demonstração**, permitindo testar todo o fluxo de compra sem realizar uma transação financeira real.
 
@@ -302,7 +302,7 @@ source venv/bin/activate
 
 #### Windows
 
-```bash
+```powershell
 python -m venv venv
 venv\Scripts\activate
 ```
@@ -321,31 +321,31 @@ uvicorn app.main:app --reload --port 8000
 
 ### 5. Acesse
 
-Aplicação:
+**Aplicação**
 
 ```text
 http://localhost:8000
 ```
 
-Documentação interativa da API:
+**Documentação interativa da API**
 
 ```text
 http://localhost:8000/docs
 ```
 
-Documentação alternativa:
+**Documentação alternativa**
 
 ```text
 http://localhost:8000/redoc
 ```
 
-O banco SQLite é criado automaticamente na primeira execução. Finalmente, uma aplicação que não exige uma pequena procissão de containers só para mostrar uma tela de login.
+O banco SQLite é criado automaticamente na primeira execução.
 
 ---
 
 ## 👥 Usuários de demonstração
 
-O projeto já possui usuários e eventos de exemplo para facilitar os testes.
+O projeto possui usuários e eventos de exemplo para facilitar os testes.
 
 ### Organizador
 
@@ -445,19 +445,19 @@ Para produção, utilize uma chave JWT forte e mantenha as credenciais fora do c
 
 ## 🗄️ Banco de dados
 
-Por padrão, o projeto utiliza SQLite:
+Por padrão, o projeto utiliza **SQLite**:
 
 ```env
 DATABASE_URL=sqlite:///./eventplatform.db
 ```
 
-Para ambientes de produção, é possível utilizar PostgreSQL alterando a configuração:
+Para ambientes de produção, é possível utilizar **PostgreSQL** alterando a configuração:
 
 ```env
 DATABASE_URL=postgresql://usuario:senha@localhost:5432/eventplatform
 ```
 
-A camada de persistência é abstraída pelo SQLAlchemy, permitindo alterar o banco sem modificar as regras principais da aplicação.
+A camada de persistência é abstraída pelo **SQLAlchemy**, permitindo alterar o banco sem modificar as regras principais da aplicação.
 
 ---
 
@@ -469,7 +469,7 @@ Depois de iniciar o projeto, acesse:
 http://localhost:8000/docs
 ```
 
-A interface do Swagger permite:
+A interface do **Swagger** permite:
 
 * Visualizar todos os endpoints
 * Consultar schemas de requisição e resposta
@@ -492,7 +492,7 @@ RESERVED
     │
     ├── Pagamento confirmado ──► SOLD
     │
-    └── 10 minutos expirados ─► AVAILABLE
+    └── 10 minutos expirados ──► AVAILABLE
 ```
 
 ### Controle de acesso
@@ -529,7 +529,7 @@ Clientes conectados
 
 ## 🎯 Objetivos do projeto
 
-O Palco foi desenvolvido para demonstrar na prática conceitos importantes de desenvolvimento de aplicações web modernas:
+O **Palco** foi desenvolvido para demonstrar, na prática, conceitos importantes de desenvolvimento de aplicações web modernas:
 
 * Desenvolvimento de APIs REST
 * Autenticação e autorização com JWT
@@ -554,7 +554,7 @@ A aplicação possui uma interface web responsiva desenvolvida para proporcionar
 
 ## 📄 Licença
 
-Este projeto está disponível para fins de estudo e demonstração.
+Este projeto está disponível para fins de **estudo e demonstração**.
 
 ---
 
@@ -564,6 +564,6 @@ Este projeto está disponível para fins de estudo e demonstração.
 
 **Plataforma de eventos, ingressos e experiências em tempo real.**
 
-Desenvolvido com 🐍 Python + ⚡ FastAPI
+Desenvolvido com 🐍 **Python** + ⚡ **FastAPI**
 
 </div>
