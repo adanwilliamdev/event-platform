@@ -1,64 +1,303 @@
 # 🎟️ Palco — Plataforma de Eventos
 
-Plataforma full stack para **gerenciamento de eventos, ingressos, reservas e pedidos**, desenvolvida com Node.js.
+> Plataforma Full Stack para **gerenciamento de eventos, ingressos, reservas e pedidos**, desenvolvida com Node.js e arquitetura modular.
 
-## 🛠️ Stack
+O **Palco** permite gerenciar eventos, controlar a disponibilidade de ingressos, realizar reservas temporárias, processar pedidos e acompanhar alterações em tempo real através de WebSocket.
 
-![Node.js](https://img.shields.io/badge/Node.js-22%2B-339933?style=for-the-badge\&logo=node.js\&logoColor=white)
-![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge\&logo=express\&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-ES2023-F7DF1E?style=for-the-badge\&logo=javascript\&logoColor=black)
-![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge\&logo=sqlite\&logoColor=white)
-![Zod](https://img.shields.io/badge/Zod-3E67B1?style=for-the-badge\&logo=zod\&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge\&logo=jsonwebtokens\&logoColor=white)
-![WebSocket](https://img.shields.io/badge/WebSocket-333333?style=for-the-badge\&logo=websocket\&logoColor=white)
-![Stripe](https://img.shields.io/badge/Stripe-635BFF?style=for-the-badge\&logo=stripe\&logoColor=white)
+O projeto foi desenvolvido com foco em **boas práticas de desenvolvimento backend, segurança, concorrência, validação de dados e integração com serviços externos**.
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-22%2B-339933?style=for-the-badge&logo=node.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white" />
+  <img src="https://img.shields.io/badge/JavaScript-ES2023-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+  <img src="https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" />
+  <img src="https://img.shields.io/badge/Zod-3E67B1?style=for-the-badge&logo=zod&logoColor=white" />
+  <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" />
+  <img src="https://img.shields.io/badge/WebSocket-333333?style=for-the-badge&logo=websocket&logoColor=white" />
+  <img src="https://img.shields.io/badge/Stripe-635BFF?style=for-the-badge&logo=stripe&logoColor=white" />
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
+</p>
+
+---
 
 ## ✨ Funcionalidades
 
-* 🔐 Autenticação e autorização com JWT
-* 👤 Gerenciamento de usuários
-* 🎪 Criação e gerenciamento de eventos
-* 🎟️ Controle e reserva de ingressos
-* ⏳ Expiração automática de reservas
-* 🛒 Criação e gerenciamento de pedidos
-* 📱 Geração de QR Code
-* ⚡ Atualizações em tempo real via WebSocket
-* 💳 Integração opcional com Stripe
-* 🌱 Seed com dados de demonstração
+### 🔐 Autenticação e usuários
 
-## 📁 Estrutura
+* Cadastro de usuários
+* Login com autenticação JWT
+* Autorização baseada em perfil
+* Consulta do usuário autenticado
+* Controle de acesso às operações protegidas
+
+### 🎪 Eventos
+
+* Criação e gerenciamento de eventos
+* Listagem de eventos
+* Consulta de próximos eventos
+* Visualização detalhada
+* Gerenciamento de ingressos associados
+
+### 🎟️ Ingressos
+
+* Controle de disponibilidade
+* Reserva temporária
+* Liberação de ingressos
+* Expiração automática de reservas
+* Controle de concorrência por ingresso
+
+### 🛒 Pedidos
+
+* Criação de pedidos
+* Consulta dos pedidos do usuário
+* Detalhamento de pedidos
+* Confirmação de pagamento
+* Geração de QR Code
+
+### ⚡ Tempo real
+
+* Comunicação através de WebSocket
+* Atualização da disponibilidade de ingressos em tempo real
+* Notificação dos clientes conectados após alterações nas reservas
+
+### 💳 Pagamentos
+
+* Integração opcional com Stripe
+* Processamento através de webhook
+* Modo demonstração sem necessidade de configuração do Stripe
+
+### 🌱 Dados de demonstração
+
+* Seed com dados iniciais
+* Usuários de teste
+* Eventos e ingressos para demonstração
+
+---
+
+## 🏗️ Arquitetura
 
 ```text
 event-platform-node/
+│
 ├── src/
-│   ├── config/
-│   ├── models/
-│   ├── services/
-│   ├── routers/
-│   ├── middleware/
-│   └── utils/
-├── public/
+│   ├── config/          # Configurações
+│   ├── middleware/      # Middlewares e autenticação
+│   ├── models/          # Persistência e acesso aos dados
+│   ├── routers/         # Rotas HTTP e WebSocket
+│   ├── services/        # Regras de negócio
+│   ├── utils/           # Utilitários e tarefas auxiliares
+│   └── schemas.js       # Validação com Zod
+│
+├── public/              # Arquivos públicos
 ├── package.json
+├── Dockerfile
 ├── .env.example
 └── .gitignore
 ```
 
+A aplicação utiliza uma arquitetura modular, separando **rotas, regras de negócio, persistência, validação e infraestrutura**.
+
+---
+
+## 🧰 Stack
+
+| Tecnologia            | Finalidade               |
+| --------------------- | ------------------------ |
+| **Node.js 22+**       | Runtime                  |
+| **Express**           | API REST                 |
+| **JavaScript ES2023** | Desenvolvimento          |
+| **SQLite**            | Banco de dados           |
+| **node:sqlite**       | Persistência             |
+| **Zod**               | Validação                |
+| **JWT**               | Autenticação             |
+| **ws**                | WebSocket                |
+| **Stripe**            | Pagamentos               |
+| **QR Code**           | Identificação de pedidos |
+| **Docker**            | Containerização          |
+| **Fly.io**            | Deploy                   |
+
+---
+
+## 🔄 Fluxo principal
+
+```text
+┌─────────────┐
+│    Usuário  │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────────┐
+│ Seleciona evento│
+└────────┬────────┘
+         │
+         ▼
+┌──────────────────┐
+│ Reserva ingresso  │
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│   Cria pedido     │
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│ Confirma pagamento│
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│    QR Code        │
+└──────────────────┘
+```
+
+Reservas não confirmadas são automaticamente liberadas após o período de expiração.
+
+---
+
+## 🔒 Controle de concorrência
+
+O sistema possui um mecanismo de **mutex por ingresso** para evitar que múltiplas requisições concorrentes reservem o mesmo ticket simultaneamente.
+
+```text
+Cliente A ──┐
+            │
+            ▼
+         ┌───────┐
+         │ Mutex │
+         └───┬───┘
+             │
+             ▼
+          Ticket
+             ▲
+             │
+Cliente B ───┘
+```
+
+Esse mecanismo garante exclusividade durante a operação de reserva.
+
+---
+
+## ⏳ Expiração automática
+
+Reservas temporárias possuem tempo de expiração.
+
+Um processo em background verifica periodicamente as reservas pendentes e libera automaticamente os ingressos expirados.
+
+```text
+Reserva criada
+      │
+      ▼
+Tempo de expiração
+      │
+      ▼
+Verificação automática
+      │
+      ▼
+Reserva expirada
+      │
+      ▼
+Ingresso liberado
+```
+
+---
+
+## 🔌 API
+
+### Autenticação
+
+| Método | Endpoint             | Descrição           |
+| ------ | -------------------- | ------------------- |
+| `POST` | `/api/auth/register` | Cadastro            |
+| `POST` | `/api/auth/login`    | Login               |
+| `GET`  | `/api/auth/me`       | Usuário autenticado |
+
+### Eventos
+
+| Método | Endpoint                  | Descrição             |
+| ------ | ------------------------- | --------------------- |
+| `GET`  | `/api/events`             | Listar eventos        |
+| `GET`  | `/api/events/upcoming`    | Próximos eventos      |
+| `GET`  | `/api/events/:id`         | Detalhes do evento    |
+| `POST` | `/api/events`             | Criar evento          |
+| `GET`  | `/api/events/:id/tickets` | Ingressos disponíveis |
+
+### Ingressos
+
+| Método | Endpoint                   | Descrição         |
+| ------ | -------------------------- | ----------------- |
+| `POST` | `/api/tickets/hold`        | Reservar ingresso |
+| `POST` | `/api/tickets/:id/release` | Liberar ingresso  |
+
+### Pedidos
+
+| Método | Endpoint                  | Descrição           |
+| ------ | ------------------------- | ------------------- |
+| `POST` | `/api/orders`             | Criar pedido        |
+| `GET`  | `/api/orders/me`          | Meus pedidos        |
+| `GET`  | `/api/orders/:id`         | Detalhes do pedido  |
+| `POST` | `/api/orders/:id/confirm` | Confirmar pagamento |
+
+### Stripe
+
+| Método | Endpoint               | Descrição            |
+| ------ | ---------------------- | -------------------- |
+| `POST` | `/api/webhooks/stripe` | Webhook de pagamento |
+
+### WebSocket
+
+```text
+WS /ws/events/:id/tickets
+```
+
+Utilizado para atualização da disponibilidade dos ingressos em tempo real.
+
+---
+
 ## 🚀 Como executar
 
-**Requisitos:** Node.js 22.5+
+### Requisitos
+
+* Node.js **22.5+**
+* npm
+
+### Instalação
 
 ```bash
+git clone https://github.com/adanwilliamdev/palco.git
+
+cd palco
+
 npm install
+```
+
+### Configuração
+
+Crie um arquivo `.env` baseado no `.env.example`:
+
+```env
+PORT=8000
+DATABASE_PATH=./eventplatform.db
+
+JWT_SECRET=sua-chave-secreta
+
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+```
+
+### Executar
+
+```bash
 npm start
 ```
 
-Modo desenvolvimento:
+### Desenvolvimento
 
 ```bash
 npm run dev
 ```
 
-Acesse:
+A aplicação estará disponível em:
 
 ```text
 http://localhost:8000
@@ -66,77 +305,132 @@ http://localhost:8000
 
 O banco SQLite é criado automaticamente na primeira execução.
 
-## ⚙️ Variáveis de ambiente
-
-```env
-PORT=8000
-DATABASE_PATH=./eventplatform.db
-JWT_SECRET=sua-chave-secreta
-STRIPE_SECRET_KEY=
-STRIPE_WEBHOOK_SECRET=
-```
-
-O Stripe é opcional. Sem as chaves configuradas, o sistema funciona em **modo demonstração**.
+---
 
 ## 👥 Usuários de demonstração
 
+### Organizador
+
 ```text
-Organizador
-organizador@eventos.com
-organiza123
-
-Administrador
-admin@eventos.com
-admin123
+E-mail: organizador@eventos.com
+Senha: organiza123
 ```
 
-## 🔌 API
+### Administrador
 
-| Método | Endpoint                   | Descrição                  |
-| ------ | -------------------------- | -------------------------- |
-| `POST` | `/api/auth/register`       | Cadastro                   |
-| `POST` | `/api/auth/login`          | Login                      |
-| `GET`  | `/api/auth/me`             | Usuário autenticado        |
-| `GET`  | `/api/events`              | Listar eventos             |
-| `GET`  | `/api/events/upcoming`     | Próximos eventos           |
-| `GET`  | `/api/events/:id`          | Detalhes do evento         |
-| `POST` | `/api/events`              | Criar evento               |
-| `GET`  | `/api/events/:id/tickets`  | Ingressos disponíveis      |
-| `POST` | `/api/tickets/hold`        | Reservar ingresso          |
-| `POST` | `/api/tickets/:id/release` | Liberar ingresso           |
-| `POST` | `/api/orders`              | Criar pedido               |
-| `GET`  | `/api/orders/me`           | Meus pedidos               |
-| `GET`  | `/api/orders/:id`          | Detalhes do pedido         |
-| `POST` | `/api/orders/:id/confirm`  | Confirmar pagamento        |
-| `POST` | `/api/webhooks/stripe`     | Webhook Stripe             |
-| `WS`   | `/ws/events/:id/tickets`   | Atualizações em tempo real |
-
-## ☁️ Deploy
-
-O projeto possui configuração para **Fly.io**, utilizando Docker e volume persistente para o banco SQLite.
-
-```bash
-fly launch --no-deploy
-fly volumes create palco_data --region gru --size 1
-fly secrets set JWT_SECRET="sua-chave-secreta"
-fly deploy
+```text
+E-mail: admin@eventos.com
+Senha: admin123
 ```
 
-> A aplicação utiliza estado em memória para controle de concorrência e WebSocket, sendo recomendada uma única instância para este modelo de deployment.
-
-> Este projeto não inclui documentação interativa (Swagger/OpenAPI) como o FastAPI gera automaticamente. Se desejar, o pacote `swagger-ui-express` pode ser adicionado posteriormente.
+> ⚠️ As credenciais são destinadas exclusivamente ao ambiente de demonstração.
 
 ---
 
-## 📌 Notas sobre a conversão
+## 💳 Configuração do Stripe
 
-* **Banco de dados**: usa `node:sqlite` (`DatabaseSync`), o módulo de SQLite **embutido no próprio Node.js** desde a versão 22.5 — não é um pacote npm, então não há compilação nativa, `node-gyp` ou dependência de Visual Studio/Xcode/build-essential. Requer **Node.js 22.5 ou superior** (recomendado 22 LTS ou mais recente). É síncrono, o que simplifica a camada de dados (sem `await` em cada consulta) — as consultas foram escritas manualmente na pasta `models/`, seguindo exatamente as mesmas tabelas e relações do `models.py` original. Por ser uma feature experimental do Node, um aviso (`ExperimentalWarning`) aparece no console ao iniciar; isso é esperado e inofensivo.
-* **Locks de concorrência**: o `threading.Lock` por ingresso foi substituído por um mutex assíncrono (`src/utils/locks.js`) baseado em encadeamento de Promises, apropriado para o modelo single-threaded do Node.js, mas preservando a mesma garantia de exclusividade por `ticket_id`.
-* **WebSocket**: como o Express não tem suporte nativo a WebSocket, a rota `/ws/events/{id}/tickets` é tratada diretamente no evento `upgrade` do servidor HTTP (`src/routers/ws.js`), com o pacote `ws`.
-* **Validação**: os DTOs Pydantic foram convertidos para schemas Zod (`src/schemas.js`), com mensagens de erro equivalentes.
-* **Job de limpeza**: o loop assíncrono que liberava reservas expiradas a cada 60s foi convertido para `setInterval` (`src/utils/background.js`).
+O Stripe é opcional.
+
+Sem as credenciais configuradas, a aplicação funciona normalmente em **modo demonstração**.
+
+Para habilitar a integração:
+
+```env
+STRIPE_SECRET_KEY=sua-chave
+STRIPE_WEBHOOK_SECRET=seu-webhook-secret
+```
+
+---
+
+## 🐳 Docker
+
+Build da imagem:
+
+```bash
+docker build -t palco .
+```
+
+Execução:
+
+```bash
+docker run \
+  -p 8000:8000 \
+  -e JWT_SECRET="sua-chave-secreta" \
+  palco
+```
+
+---
+
+## ☁️ Deploy
+
+O projeto possui configuração para deploy no **Fly.io**, utilizando Docker e volume persistente para o banco SQLite.
+
+```bash
+fly launch --no-deploy
+
+fly volumes create palco_data \
+  --region gru \
+  --size 1
+
+fly secrets set JWT_SECRET="sua-chave-secreta"
+
+fly deploy
+```
+
+### ⚠️ Escalabilidade
+
+A aplicação mantém informações de concorrência e conexões WebSocket em memória.
+
+Por isso, o modelo atual é indicado para **uma única instância**.
+
+Para escalabilidade horizontal, seria necessário externalizar o estado compartilhado, utilizando uma solução como Redis e uma estratégia de distribuição das conexões WebSocket.
+
+---
+
+## 🧪 Conceitos demonstrados
+
+O projeto aplica conhecimentos práticos em:
+
+* API REST
+* Arquitetura modular
+* Autenticação e autorização
+* JWT
+* Validação de dados
+* SQLite
+* Controle de concorrência
+* Programação assíncrona
+* WebSocket
+* Background jobs
+* Webhooks
+* Integração com APIs externas
+* Pagamentos
+* QR Code
+* Docker
+* Deploy em cloud
+
+---
+
+## 📌 Roadmap
+
+* [ ] Documentação OpenAPI / Swagger
+* [ ] Testes automatizados
+* [ ] Redis para estado compartilhado
+* [ ] Suporte a múltiplas instâncias
+* [ ] Observabilidade e métricas
+* [ ] Pipeline CI/CD
+
+---
 
 ## 📄 Licença
 
 Projeto desenvolvido para **estudo, portfólio e demonstração técnica**.
 
+---
+
+<p align="center">
+
+### 🎟️ Palco
+
+**Event Platform • Node.js • Express • WebSocket • Stripe**
+
+</p>
