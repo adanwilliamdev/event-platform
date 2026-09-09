@@ -5,10 +5,18 @@
  * Equivalente ao app/database.py original (SQLAlchemy).
  */
 const path = require('path');
+const fs = require('fs');
 const { DatabaseSync } = require('node:sqlite');
 
 const DB_PATH =
   process.env.DATABASE_PATH || path.join(process.cwd(), 'eventplatform.db');
+
+// Garante que o diretório de destino exista (importante quando DATABASE_PATH
+// aponta para um volume montado, ex.: /data/eventplatform.db no Fly.io).
+const dbDir = path.dirname(DB_PATH);
+if (dbDir && !fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir, { recursive: true });
+}
 
 const db = new DatabaseSync(DB_PATH);
 db.exec('PRAGMA journal_mode = WAL;');

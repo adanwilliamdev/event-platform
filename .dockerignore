@@ -1,0 +1,10 @@
+node_modules
+npm-debug.log
+eventplatform.db
+eventplatform.db-journal
+eventplatform.db-wal
+eventplatform.db-shm
+.env
+.git
+.gitignore
+README.md
