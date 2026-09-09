@@ -45,7 +45,7 @@ event-platform-node/
 **Requisitos:** Node.js 22.5+
 
 ```bash
-git clone https://github.com/SEU-USUARIO/event-platform-node.git
+git clone https://github.com/adanwilliamdev/event-platform-node.git
 cd event-platform-node
 npm install
 npm start
