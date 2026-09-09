@@ -157,44 +157,6 @@ Os mesmos endpoints do backend original foram preservados (mesmos métodos, cami
 
 ---
 
-## ☁️ Deploy no Fly.io
-
-O projeto já inclui `Dockerfile` e `fly.toml` prontos. Como o app roda como processo Node.js persistente (não serverless), WebSocket, `node:sqlite` e o job de limpeza funcionam sem alterações — o único cuidado real é a **persistência do banco SQLite**, feita via Fly Volume.
-
-### Passo a passo
-
-```bash
-# 1. Instale o flyctl e faça login (se ainda não tiver)
-curl -L https://fly.io/install.sh | sh
-fly auth login
-
-# 2. Crie o app (gera/ajusta o fly.toml automaticamente se necessário)
-fly launch --no-deploy
-
-# 3. Crie o volume persistente para o banco de dados
-#    (use a mesma região definida em primary_region no fly.toml)
-fly volumes create palco_data --region gru --size 1
-
-# 4. Defina a chave JWT como segredo (não deixe o valor padrão em produção)
-fly secrets set JWT_SECRET="$(openssl rand -hex 32)"
-
-# 5. (Opcional) Configure o Stripe, se for usar pagamentos reais
-fly secrets set STRIPE_SECRET_KEY="sk_live_..." STRIPE_WEBHOOK_SECRET="whsec_..."
-
-# 6. Deploy
-fly deploy
-```
-
-### Por que apenas 1 máquina?
-
-O `fly.toml` já vem configurado com `min_machines_running = 1` e sem escalonamento automático para múltiplas instâncias simultâneas. Isso é proposital: o lock de concorrência por ingresso (`src/utils/locks.js`) e o gerenciador de WebSocket (`src/utils/wsManager.js`) guardam estado **em memória**, dentro de um único processo. Rodar 2+ máquinas ao mesmo tempo quebraria essa garantia (duas pessoas poderiam reservar o mesmo assento em máquinas diferentes, e os broadcasts de WebSocket não chegariam a todo mundo). Para escalar horizontalmente de verdade, seria necessário migrar o lock para algo compartilhado (ex.: transações no Postgres ou Redis) e o WebSocket para um serviço com pub/sub (ex.: Redis pub/sub entre instâncias).
-
-### Volume e backups
-
-O Fly Volume (`palco_data`) é um disco local preso à máquina — ele sobrevive a redeploys e restarts, mas **não é replicado automaticamente**. Para produção real, vale considerar backups periódicos (`fly volumes snapshots`) ou migrar para um banco gerenciado (Postgres via Fly Postgres, Neon, Supabase etc.) caso precise de alta disponibilidade ou múltiplas regiões.
-
----
-
 ## 📌 Notas sobre a conversão
 
 * **Banco de dados**: usa `node:sqlite` (`DatabaseSync`), o módulo de SQLite **embutido no próprio Node.js** desde a versão 22.5 — não é um pacote npm, então não há compilação nativa, `node-gyp` ou dependência de Visual Studio/Xcode/build-essential. Requer **Node.js 22.5 ou superior** (recomendado 22 LTS ou mais recente). É síncrono, o que simplifica a camada de dados (sem `await` em cada consulta) — as consultas foram escritas manualmente na pasta `models/`, seguindo exatamente as mesmas tabelas e relações do `models.py` original. Por ser uma feature experimental do Node, um aviso (`ExperimentalWarning`) aparece no console ao iniciar; isso é esperado e inofensivo.

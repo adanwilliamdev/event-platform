@@ -11,7 +11,6 @@ const {
 } = require('./utils/background');
 
 const PORT = process.env.PORT || 8000;
-const HOST = process.env.HOST || '0.0.0.0';
 
 seedDemoData();
 
@@ -19,8 +18,8 @@ const server = http.createServer(app);
 attachWebSocketServer(server);
 startReservationCleanupLoop();
 
-server.listen(PORT, HOST, () => {
-  console.log(`Event Platform API rodando em http://${HOST}:${PORT}`);
+server.listen(PORT, () => {
+  console.log(`Event Platform API rodando em http://localhost:${PORT}`);
 });
 
 function shutdown() {
