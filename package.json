@@ -1,0 +1,24 @@
+{
+  "name": "palco-event-platform",
+  "version": "1.0.0",
+  "description": "Palco - Plataforma de Eventos (conversão Node.js do backend FastAPI)",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "qrcode": "^1.5.4",
+    "uuid": "^9.0.1",
+    "ws": "^8.18.0",
+    "zod": "^3.25.76"
+  }
+}

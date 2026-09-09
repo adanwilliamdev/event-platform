@@ -1,0 +1,6 @@
+node_modules/
+eventplatform.db
+eventplatform.db-journal
+eventplatform.db-wal
+eventplatform.db-shm
+.env
